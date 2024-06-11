@@ -1,0 +1,32 @@
+FROM alpine:latest
+
+RUN apk update && \
+    apk add openssh && \
+    apk add bash
+
+
+ARG SFTP_USER
+ARG SFTP_PASSWORD
+
+RUN addgroup sftpusers && \
+    adduser -D -G sftpusers -s /bin/false "$SFTP_USER" && \
+    echo "$SFTP_USER:$SFTP_PASSWORD" | chpasswd && \
+    mkdir -p /home/"$SFTP_USER"/.ssh /home/"$SFTP_USER"/upload && \
+    chown root:sftpusers /home/"$SFTP_USER" && \
+    chmod 755 /home/"$SFTP_USER" && \
+    chown "$SFTP_USER":sftpusers /home/"$SFTP_USER"/upload && \
+    chmod 755 /home/"$SFTP_USER"/upload
+
+RUN ssh-keygen -A
+
+RUN echo "Subsystem sftp internal-sftp" >> /etc/ssh/sshd_config && \
+    echo "Match Group sftpusers" >> /etc/ssh/sshd_config && \
+    echo "ChrootDirectory /home/%u" >> /etc/ssh/sshd_config && \
+    echo "ForceCommand internal-sftp" >> /etc/ssh/sshd_config && \
+    echo "AllowTcpForwarding no" >> /etc/ssh/sshd_config && \
+    echo "PermitTunnel no" >> /etc/ssh/sshd_config && \
+    echo "X11Forwarding no" >> /etc/ssh/sshd_config
+
+EXPOSE 22
+
+CMD ["/usr/sbin/sshd", "-D"]
