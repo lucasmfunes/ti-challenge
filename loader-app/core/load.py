@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(level
 logger = logging.getLogger(__name__)
 
 def consume_messages():
-    create_tables()  # Ensure tables are created
+    create_tables()  
     try:
         consumer = KafkaConsumer(
             EnvVariables.KAFKA_TOPIC_NAME.get_env(),
@@ -25,7 +25,6 @@ def consume_messages():
             filename = file_data['filename']
             content = file_data['content']
             
-            # Reconstruct the file locally
             local_file_path = f'files/{filename}'
             os.makedirs(os.path.dirname(local_file_path), exist_ok=True)
             with open(local_file_path, 'w') as file:
@@ -33,10 +32,8 @@ def consume_messages():
             
             logger.info(f'Received and reconstructed file: {local_file_path}')
             
-            # Process the file and store in the database
             process_file(filename, content)
             
-            # Upload the file to the SFTP server
             upload_file_to_sftp(local_file_path, f'/upload/{filename}')
 
     except Exception as e:

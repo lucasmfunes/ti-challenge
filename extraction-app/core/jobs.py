@@ -8,13 +8,13 @@ from core.kafka import create_kafka_producer, send_files_to_kafka
 
 def fetch_and_save_data():
     print("Fetching data from API...")
-    sys.stdout.flush()  # Asegurarse de que la salida se vacía al buffer
+    sys.stdout.flush() 
 
-    # Realizar la solicitud HTTP
+    
     response = requests.get('https://dummyjson.com/users')
     
     if response.status_code == 200:
-        data = response.json()  # Convertir la respuesta a JSON
+        data = response.json()  
         today = datetime.today().strftime('%Y%m%d')
         json_file_path = f'files/data_{today}.json'
         os.makedirs(os.path.dirname(json_file_path), exist_ok=True)
@@ -22,7 +22,7 @@ def fetch_and_save_data():
             json.dump(data, json_file, indent=4)
         print(f"Data has been written to {json_file_path}")
         
-        # Llamar a la función de transformación
+        
         transform_data()
         send_csv_to_kafka()
     else:

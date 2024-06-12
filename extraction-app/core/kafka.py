@@ -15,7 +15,7 @@ def send_to_kafka(producer, topic, data):
 def send_files_to_kafka(producer, topic, directory):
     for filename in os.listdir(directory):
         file_path = os.path.join(directory, filename)
-        if os.path.isfile(file_path):  # Asegurarse de que sea un archivo
+        if os.path.isfile(file_path):   
             with open(file_path, 'r') as file:
                 content = file.read()
             message = {
