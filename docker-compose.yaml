@@ -78,6 +78,7 @@ services:
     depends_on:
       - zookeeper
       - kafka
+      - extraction-app
     networks:
       - broker-kafka
     volumes:
@@ -106,6 +107,8 @@ services:
       - .env
     ports:
       - "5000:5000"
+    depends_on:
+      - loader-app
     volumes:
       - shared-data:/app/data
     networks:
@@ -116,6 +119,8 @@ services:
       context: ./frontend
     ports:
       - "8080:80"
+    depends_on:
+      - api
     networks:
        - broker-kafka
 
