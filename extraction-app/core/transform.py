@@ -19,7 +19,6 @@ def transform_to_csv(json_data):
     users = json_data['users']
     csv_data = []
     
-    # Headers for user details
     headers = [
         "id", "firstName", "lastName", "age", "gender", "email", "phone", 
         "username", "birthDate", "height", "weight", "eyeColor", 
@@ -144,16 +143,13 @@ def gender_to_index(gender):
 def main():
     today = datetime.today().strftime('%Y%m%d')
     
-    # Load JSON data
     json_file_path = f'files/data_{today}.json'
     json_data = load_json(json_file_path)
     
-    # Transform to CSV
     csv_data = transform_to_csv(json_data)
     etl_csv_file_path = f'files/ETL_{today}.csv'
     save_csv(csv_data, etl_csv_file_path)
     
-    # Create summary
     summary_data = create_summary(json_data)
     summary_csv_file_path = f'files/summary_{today}.csv'
     save_csv(summary_data, summary_csv_file_path)

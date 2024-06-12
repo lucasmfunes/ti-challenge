@@ -8,7 +8,7 @@ DATABASE = '/app/data/data.db'
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-# Create tables
+
 def create_tables():
     with closing(sqlite3.connect(DATABASE)) as conn:
         with conn:
@@ -56,7 +56,6 @@ def create_tables():
                 )
             ''')
 
-# Insert summary data into the database
 def insert_summary_data(filename, summary_data):
     with closing(sqlite3.connect(DATABASE)) as conn:
         with conn:
@@ -78,7 +77,6 @@ def insert_summary_data(filename, summary_data):
                         VALUES (?, ?, ?, ?, ?)
                     ''', (process_id, 0, row[1], row[2], row[3]))
 
-# Insert ETL data into the database
 def insert_etl_data(filename, etl_data):
     with closing(sqlite3.connect(DATABASE)) as conn:
         with conn:
@@ -103,12 +101,10 @@ def insert_etl_data(filename, etl_data):
                     row['state'], row['postalCode'], row['country']
                 ))
 
-# Convert CSV content to list of dictionaries for ETL data
 def csv_to_dict_list(csv_content):
     reader = csv.DictReader(csv_content.splitlines())
     return [row for row in reader]
 
-# Convert CSV content to list of lists for summary data
 def csv_to_list(csv_content):
     reader = csv.reader(csv_content.splitlines())
     return [row for row in reader]
