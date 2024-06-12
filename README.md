@@ -6,7 +6,6 @@
 - [Technologies](#technologies)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Architecture
@@ -49,6 +48,11 @@ This process is intended to run every day at 00:00hs. For testing purposes, you 
 To connect to the db, you can access the data.db file located in the "Files" tab in the loader-app and api-1 (shared volume) containers.
 
 ![alt text](image-1.png)
+
+You can use FTP tools like WINScp (https://winscp.net/eng/download.php) to connect to the SFTP server and check the generated files
+
+![image](https://github.com/lucasmfunes/ti-challenge/assets/17455330/93830f2b-16e0-4017-bd3c-64d4f3f35692)
+
 
 ## License
 
