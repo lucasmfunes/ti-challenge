@@ -9,9 +9,9 @@ from core.database_manager import create_tables, process_file
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-def consume_messages():
-    create_tables()  
+def consume_messages(): 
     try:
+        create_tables() 
         consumer = KafkaConsumer(
             EnvVariables.KAFKA_TOPIC_NAME.get_env(),
             bootstrap_servers=f'{EnvVariables.KAFKA_SERVER.get_env()}:{EnvVariables.KAFKA_PORT.get_env()}',
