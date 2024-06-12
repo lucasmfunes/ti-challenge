@@ -4,7 +4,7 @@ import sys
 from core.jobs import fetch_and_save_data
 
 def run_scheduler():
-    schedule.every(5).minutes.do(fetch_and_save_data)
+    schedule.every(2).minutes.do(fetch_and_save_data)
 
     print("Starting the scheduler")
     sys.stdout.flush()
@@ -14,4 +14,4 @@ def run_scheduler():
     
     while True:
         schedule.run_pending()
-        time.sleep(50)
+        time.sleep(10)

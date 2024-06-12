@@ -8,7 +8,6 @@ DATABASE = '/app/data/data.db'
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-
 def create_tables():
     with closing(sqlite3.connect(DATABASE)) as conn:
         with conn:
@@ -45,13 +44,51 @@ def create_tables():
                 )
             ''')
             conn.execute('''
-                CREATE TABLE IF NOT EXISTS summary_data (
+                CREATE TABLE IF NOT EXISTS register_data (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     process_id INTEGER,
                     register INTEGER,
+                    total INTEGER,
+                    FOREIGN KEY (process_id) REFERENCES process_header(id)
+                )
+            ''')
+            conn.execute('''
+                CREATE TABLE IF NOT EXISTS gender_data (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    process_id INTEGER,
+                    gender TEXT,
+                    total INTEGER,
+                    FOREIGN KEY (process_id) REFERENCES process_header(id)
+                )
+            ''')
+            conn.execute('''
+                CREATE TABLE IF NOT EXISTS age_data (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    process_id INTEGER,
+                    age_range TEXT,
                     male INTEGER,
                     female INTEGER,
                     other INTEGER,
+                    FOREIGN KEY (process_id) REFERENCES process_header(id)
+                )
+            ''')
+            conn.execute('''
+                CREATE TABLE IF NOT EXISTS city_data (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    process_id INTEGER,
+                    city TEXT,
+                    male INTEGER,
+                    female INTEGER,
+                    other INTEGER,
+                    FOREIGN KEY (process_id) REFERENCES process_header(id)
+                )
+            ''')
+            conn.execute('''
+                CREATE TABLE IF NOT EXISTS os_data (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    process_id INTEGER,
+                    os TEXT,
+                    total INTEGER,
                     FOREIGN KEY (process_id) REFERENCES process_header(id)
                 )
             ''')
@@ -62,20 +99,51 @@ def insert_summary_data(filename, summary_data):
             cursor = conn.cursor()
             cursor.execute('''
                 INSERT INTO process_header (file_name, insertion_date)
-                VALUES (?, datetime('now'))
+                VALUES (?, date('now'))
             ''', (filename,))
             process_id = cursor.lastrowid
+
+            current_table = None
             for row in summary_data:
-                if len(row) == 2:
-                    cursor.execute('''
-                        INSERT INTO summary_data (process_id, register, male, female, other)
+                if len(row) == 2 and row[0] == 'register':
+                    current_table = 'register_data'
+                    cursor.execute(f'''
+                        INSERT INTO {current_table} (process_id, register, total)
+                        VALUES (?, ?, ?)
+                    ''', (process_id, row[0], row[1]))
+                elif len(row) == 2 and row[0] in ['male', 'female', 'other']:
+                    current_table = 'gender_data'
+                    cursor.execute(f'''
+                        INSERT INTO {current_table} (process_id, gender, total)
+                        VALUES (?, ?, ?)
+                    ''', (process_id, row[0], row[1]))
+                elif len(row) == 4 and row[0] == 'age':
+                    current_table = 'age_data'
+                    continue
+                elif len(row) == 4 and current_table == 'age_data' and row[0] != 'City':
+                    cursor.execute(f'''
+                        INSERT INTO {current_table} (process_id, age_range, male, female, other)
                         VALUES (?, ?, ?, ?, ?)
-                    ''', (process_id, row[1], 0, 0, 0))
-                elif len(row) == 4:
-                    cursor.execute('''
-                        INSERT INTO summary_data (process_id, register, male, female, other)
+                    ''', (process_id, row[0], row[1], row[2], row[3]))
+                elif len(row) == 4 and row[0] == 'City':
+                    current_table = 'city_data'
+                    continue
+                elif len(row) == 4 and current_table == 'city_data':
+                    cursor.execute(f'''
+                        INSERT INTO {current_table} (process_id, city, male, female, other)
                         VALUES (?, ?, ?, ?, ?)
-                    ''', (process_id, 0, row[1], row[2], row[3]))
+                    ''', (process_id, row[0], row[1], row[2], row[3]))
+                elif len(row) == 2 and row[0] == 'OS':
+                    current_table = 'os_data'
+                    cursor.execute(f'''
+                        INSERT INTO {current_table} (process_id, os, total)
+                        VALUES (?, ?, ?)
+                    ''', (process_id, row[0], row[1]))
+                elif len(row) == 2 and row[0] in ['Windows', 'Apple', 'Linux']:
+                    cursor.execute(f'''
+                        INSERT INTO {current_table} (process_id, os, total)
+                        VALUES (?, ?, ?)
+                    ''', (process_id, row[0], row[1]))
 
 def insert_etl_data(filename, etl_data):
     with closing(sqlite3.connect(DATABASE)) as conn:
@@ -83,7 +151,7 @@ def insert_etl_data(filename, etl_data):
             cursor = conn.cursor()
             cursor.execute('''
                 INSERT INTO process_header (file_name, insertion_date)
-                VALUES (?, datetime('now'))
+                VALUES (?, date('now'))
             ''', (filename,))
             process_id = cursor.lastrowid
             for row in etl_data:
@@ -110,6 +178,7 @@ def csv_to_list(csv_content):
     return [row for row in reader]
 
 def process_file(filename, content):
+    create_tables()
     if 'summary_' in filename:
         summary_data = csv_to_list(content)
         insert_summary_data(filename, summary_data)
