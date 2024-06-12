@@ -14,57 +14,55 @@
             padding: 10px;
             text-align: left;
         }
+        .chart-container {
+            width: 50%;
+            margin: auto;
+        }
+        .chart {
+            width: 500px !important;
+            height: 500px !important;
+        }
     </style>
 </head>
 <body>
-    <h1>Process Header</h1>
-    <table id="process-header-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>File Name</th>
-                <th>Insertion Date</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <h1>Process Data</h1>
+    <select id="process-selector" onchange="loadSummaryData()">
+        <option value="">Select Process</option>
+    </select>
 
-    <h1>ETL Data</h1>
-    <table id="etl-data-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Process ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Age</th>
-                <th>Gender</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Username</th>
-                <th>Birth Date</th>
-                <th>Height</th>
-                <th>Weight</th>
-                <th>Eye Color</th>
-                <th>Hair Color</th>
-                <th>Hair Type</th>
-                <th>Address</th>
-                <th>City</th>
-                <th>State</th>
-                <th>Postal Code</th>
-                <th>Country</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-
-    <h1>Summary Data</h1>
-    <table id="summary-data-table">
+    <h1>Register Data</h1>
+    <table id="register-data-table">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Process ID</th>
                 <th>Register</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <h1>Gender Data</h1>
+    <table id="gender-data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Process ID</th>
+                <th>Gender</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <h1>Age Data</h1>
+    <table id="age-data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Process ID</th>
+                <th>Age Range</th>
                 <th>Male</th>
                 <th>Female</th>
                 <th>Other</th>
@@ -73,6 +71,43 @@
         <tbody></tbody>
     </table>
 
+    <h1>City Data</h1>
+    <table id="city-data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Process ID</th>
+                <th>City</th>
+                <th>Male</th>
+                <th>Female</th>
+                <th>Other</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <h1>OS Data</h1>
+    <table id="os-data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Process ID</th>
+                <th>OS</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <h2>Charts</h2>
+    <div class="chart-container">
+        <canvas id="gender-chart" class="chart"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="os-chart" class="chart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
