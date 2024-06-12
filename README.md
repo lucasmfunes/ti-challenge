@@ -6,6 +6,8 @@
 - [Technologies](#technologies)
 - [Installation](#installation)
 - [Usage](#usage)
+- [API Documentation](#api-documentation)
+- [Frontend](#frontend)
 - [License](#license)
 
 ## Architecture
@@ -53,6 +55,81 @@ You can use FTP tools like WINScp (https://winscp.net/eng/download.php) to conne
 
 ![image](https://github.com/lucasmfunes/ti-challenge/assets/17455330/93830f2b-16e0-4017-bd3c-64d4f3f35692)
 
+## API Documentation
+
+The API provides several endpoints to interact with the data stored in the database. Below is a detailed description of each endpoint, including the HTTP method, URL, parameters, and a brief description of its functionality.
+
+### Endpoints
+
+1. **Get Process Headers**
+    - **URL:** `/api/process_header`
+    - **Method:** `GET`
+    - **Description:** Retrieves all process headers.
+
+2. **Get ETL Data**
+    - **URL:** `/api/etl_data`
+    - **Method:** `GET`
+    - **Description:** Retrieves all ETL data.
+
+3. **Get Register Data**
+    - **URL:** `/api/register_data`
+    - **Method:** `GET`
+    - **Parameters:**
+      - `process_id` (optional): Filter by process ID.
+    - **Description:** Retrieves register data, optionally filtered by process ID.
+
+4. **Get Gender Data**
+    - **URL:** `/api/gender_data`
+    - **Method:** `GET`
+    - **Parameters:**
+      - `process_id` (optional): Filter by process ID.
+    - **Description:** Retrieves gender data, optionally filtered by process ID.
+
+5. **Get Age Data**
+    - **URL:** `/api/age_data`
+    - **Method:** `GET`
+    - **Parameters:**
+      - `process_id` (optional): Filter by process ID.
+    - **Description:** Retrieves age data, optionally filtered by process ID.
+
+6. **Get City Data**
+    - **URL:** `/api/city_data`
+    - **Method:** `GET`
+    - **Parameters:**
+      - `process_id` (optional): Filter by process ID.
+    - **Description:** Retrieves city data, optionally filtered by process ID.
+
+7. **Get OS Data**
+    - **URL:** `/api/os_data`
+    - **Method:** `GET`
+    - **Parameters:**
+      - `process_id` (optional): Filter by process ID.
+    - **Description:** Retrieves OS data, optionally filtered by process ID.
+
+## Frontend Functionality
+
+### Key Features
+
+1. **Process Selection:**
+    - **Dropdown Menu:** Users can select a process from a dropdown menu to view the associated summary data.
+
+2. **Data Display:**
+    - **Tables:** The application displays data in organized tables, including:
+        - Register Data
+        - Gender Data
+        - Age Data
+        - City Data
+        - OS Data
+
+3. **Charts:**
+    - **Gender Distribution Chart:** A pie chart that visualizes the distribution of genders (male, female, other) based on the selected process.
+    - **OS Distribution Chart:** A pie chart that visualizes the distribution of operating systems (Windows, Apple, Linux) based on the selected process.
+    - **Responsive Design:** Charts are responsive and adjust their size based on the window size, providing an optimal viewing experience on different devices.
+
+4. **Interactive Elements:**
+    - **Real-time Data Filtering:** Users can filter data in real-time by selecting different processes, which updates the displayed data and charts accordingly.
+
+![alt text](image-2.png)
 
 ## License
 
