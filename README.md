@@ -40,6 +40,15 @@
 
 ![image](https://github.com/lucasmfunes/ti-challenge/assets/17455330/c460d89c-a6ca-4d19-a886-465b8784ff01)
 
+## Usage
+
+This process is intended to run every day at 00:00hs. For testing purposes, you can modify the file 'scheduler.py' inside the path extraction-app/core/ with the following line: 
+
+`schedule.every(5).minutes.do(fetch_and_save_data)`
+
+To connect to the db, you can access the data.db file located in the "Files" tab in the loader-app and api-1 (shared volume) containers.
+
+![alt text](image-1.png)
 
 ## License
 
