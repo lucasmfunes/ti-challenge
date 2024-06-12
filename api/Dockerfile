@@ -5,7 +5,7 @@ ARG BASE_CONTAINER=python:3.8
 FROM --platform=linux/amd64 $BASE_CONTAINER
 
 # Set working directory
-WORKDIR /loader-app
+WORKDIR /api
 
 # Copy requirements.txt and install dependencies
 COPY requirements.txt .

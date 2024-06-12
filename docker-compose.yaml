@@ -80,6 +80,8 @@ services:
       - kafka
     networks:
       - broker-kafka
+    volumes:
+      - shared-data:/app/data
 
   extraction-app:
     container_name: extraction-app
@@ -96,6 +98,21 @@ services:
       - kafka
     networks:
       - broker-kafka
+  
+  api:
+    build:
+      context: ./api
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"
+    volumes:
+      - shared-data:/app/data
+    networks:
+      - broker-kafka
+
+volumes:
+  shared-data:
 
 networks:
   broker-kafka:

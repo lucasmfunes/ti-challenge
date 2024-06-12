@@ -1,6 +1,4 @@
-from app import main
-from dotenv import load_dotenv
+from core.load import consume_messages
 
-if __name__ == '__main__':
-    load_dotenv()
-    main()
+if __name__ == "__main__":
+    consume_messages()
