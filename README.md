@@ -32,9 +32,14 @@
     - SFTP_PASSWORD= {SFTP passwords , it will configure this password in the server}
     - SFTP_PORT= {it has to match with the SFTP port, in this case 22}
 
-- located at the root of the project, run:
+- Located at the root of the project, run:
 
-    docker compose up
+    `docker compose up`
+
+- In the docker desktop, you will see all of this containers up and running
+
+![image](https://github.com/lucasmfunes/ti-challenge/assets/17455330/c460d89c-a6ca-4d19-a886-465b8784ff01)
+
 
 ## License
 
