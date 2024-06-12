@@ -1,7 +1,6 @@
 # Use a lightweight web server image
 FROM nginx:alpine
 
-# Remove the default Nginx website
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy the frontend files to the Nginx directory
