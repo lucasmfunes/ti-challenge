@@ -6,7 +6,7 @@ from core.jobs import fetch_and_save_data
 def run_scheduler():
 
     # Wait until kafka is up and running
-    time.sleep(10)
+    time.sleep(25)
 
     fetch_and_save_data()
 

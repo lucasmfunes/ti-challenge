@@ -13,8 +13,8 @@ def consume_messages():
     try:
         create_tables() 
         consumer = KafkaConsumer(
-            EnvVariables.KAFKA_TOPIC_NAME.get_env(),
-            bootstrap_servers=f'{EnvVariables.KAFKA_SERVER.get_env()}:{EnvVariables.KAFKA_PORT.get_env()}',
+            "topic_test",
+            bootstrap_servers="kafka:29092",
             value_deserializer=lambda x: loads(x.decode('utf-8')),
             auto_offset_reset='earliest',
             enable_auto_commit=True,

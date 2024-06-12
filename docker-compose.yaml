@@ -64,9 +64,6 @@ services:
       context: ./loader-app
       dockerfile: Dockerfile
     environment:
-      - KAFKA_TOPIC_NAME=${KAFKA_TOPIC_NAME}
-      - KAFKA_SERVER=${KAFKA_SERVER}
-      - KAFKA_PORT=${KAFKA_PORT}
       - SFTP_USER=${SFTP_USER}
       - SFTP_PASSWORD=${SFTP_PASSWORD}
       - SFTP_PORT=${SFTP_PORT}
