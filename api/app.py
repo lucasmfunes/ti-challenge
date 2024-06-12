@@ -1,7 +1,9 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
 from core.database import query_db
 
 app = Flask(__name__)
+CORS(app)  # Permitir todas las solicitudes de origen cruzado
 
 @app.route('/api/process_header', methods=['GET'])
 def get_process_header():

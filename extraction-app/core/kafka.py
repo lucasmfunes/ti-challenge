@@ -14,8 +14,8 @@ def send_to_kafka(producer, topic, data):
 
 def send_files_to_kafka(producer, topic, directory):
     for filename in os.listdir(directory):
-        if filename.endswith('.csv'):
-            file_path = os.path.join(directory, filename)
+        file_path = os.path.join(directory, filename)
+        if os.path.isfile(file_path):  # Asegurarse de que sea un archivo
             with open(file_path, 'r') as file:
                 content = file.read()
             message = {
@@ -23,3 +23,4 @@ def send_files_to_kafka(producer, topic, directory):
                 'content': content
             }
             send_to_kafka(producer, topic, message)
+            os.remove(file_path)

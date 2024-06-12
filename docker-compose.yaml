@@ -111,6 +111,14 @@ services:
     networks:
       - broker-kafka
 
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "8080:80"
+    networks:
+       - broker-kafka
+
 volumes:
   shared-data:
 
